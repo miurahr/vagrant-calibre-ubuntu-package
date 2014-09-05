@@ -29,7 +29,7 @@ diff -ur debian.o/rules debian/rules
  	mkdir -p build-$*
  	cd build-$* && python$* ../configure.py $(SHARED_CONFIGURE_OPTIONS) \
 -			-m $(shell python$*-config --configdir) \
-+			-m /usr/lib/python$*/config \
++			-m $(if $(filter 3.2, $*),/usr/lib/python$*/config,$(shell python$*-config --configdir)) \
  			-d /usr/lib/python$*/dist-packages \
  			--dbus /usr/include/dbus-1.0 \
  			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin)
