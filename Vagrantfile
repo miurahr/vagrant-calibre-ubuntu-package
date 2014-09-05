@@ -21,16 +21,15 @@ apt-get install -y qtchooser libicu-dev
 apt-get install libqt5opengl5-dev libqt5webkit5-dev qtmultimedia5-dev qtdeclarative5-dev qttools5-dev libqt5svg5-dev libqt5xmlpatterns5-dev
 DEPENDENCY
 
-# libqt5opengl5-dev libqt5sensors5-dev libqt5serialport5-dev libqt5svg5-dev libqt5webkit5-dev libqt5xmlpatterns5-dev libqt5x11extras5-dev qtdeclarative5-dev qtmultimedia5-dev qtpositioning5-dev qttools5-dev
-
 $build = <<BUILD
+cd /home/ubuntu
 wget -c http://archive.ubuntu.com/ubuntu/pool/main/s/sip4/sip4_4.15.5-1build1.dsc
 wget -c http://archive.ubuntu.com/ubuntu/pool/main/s/sip4/sip4_4.15.5.orig.tar.gz
 wget -c http://archive.ubuntu.com/ubuntu/pool/main/s/sip4/sip4_4.15.5-1build1.debian.tar.gz
 dpkg-source -x sip4_4.15.5-1build1.dsc
 cd sip4-4.15.5
-patch -i ../sip4.patch -p1
-patch -i ../sip4-2.patch -p1
+patch -i /vagrant/sip4.patch -p1
+patch -i /vagrant/sip4-2.patch -p1
 debuild -us -uc -b -i
 cd ..
 sudo dpkg -i python-sip*deb python3-sip*deb sip-dev*deb
@@ -39,7 +38,7 @@ wget -c http://archive.ubuntu.com/ubuntu/pool/main/p/pyqt5/pyqt5_5.2.1+dfsg.orig
 wget -c http://archive.ubuntu.com/ubuntu/pool/main/p/pyqt5/pyqt5_5.2.1+dfsg-1ubuntu1.debian.tar.xz
 dpkg-source -x pyqt5_5.2.1+dfsg-1ubuntu1.dsc
 cd pyqt5-5.2.1+dfsg
-patch -i ../pyqt5.patch -p1
+patch -i /vagrant/pyqt5.patch -p1
 debuild -us -uc -b -i
 cd ..
 sudo dpkg -i -y pyqt5-dev*.deb python-pyqt5*deb pyqt5-dev-tools*deb
