@@ -1,0 +1,35 @@
+diff -ur debian.o/control debian/control
+--- a/debian/control	2014-03-21 15:53:50.000000000 +0900
++++ b/debian/control	2014-09-05 11:58:52.983988477 +0900
+@@ -15,18 +15,15 @@
+                libicu-dev,
+                libpulse-dev,
+                libqt5opengl5-dev,
+-               libqt5sensors5-dev,
+-               libqt5serialport5-dev,
+                libqt5svg5-dev,
+                libqt5webkit5-dev,
+                libqt5xmlpatterns5-dev,
+-               libqt5x11extras5-dev,
+                libsqlite3-dev,
+                libudev-dev [linux-any],
+                libxml2-dev,
+                libxslt1-dev,
+                python3-all-dbg,
+-               python3-all-dev (>= 3.2.3-6~),
++               python3-all-dev (>= 3.2.3-0~),
+                python3-dbus,
+                python3-dbus-dbg,
+                python3-sip-dbg,
+diff -ur debian.o/rules debian/rules
+--- a/debian/rules	2014-03-21 15:53:50.000000000 +0900
++++ b/debian/rules	2014-09-05 11:59:17.487988243 +0900
+@@ -52,7 +52,7 @@
+ 	dh_testdir
+ 	mkdir -p build-$*
+ 	cd build-$* && python$* ../configure.py $(SHARED_CONFIGURE_OPTIONS) \
+-			-m $(shell python$*-config --configdir) \
++			-m /usr/lib/python$*/config \
+ 			-d /usr/lib/python$*/dist-packages \
+ 			--dbus /usr/include/dbus-1.0 \
+ 			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin)

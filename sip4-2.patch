@@ -1,0 +1,21 @@
+--- a/debian/rules	2014-09-05 01:56:01.162908857 +0000
++++ b/debian/rules	2014-09-05 01:59:44.930914584 +0000
+@@ -120,11 +120,13 @@
+ 	install -m 644 -o root -g root debian/sipconfig_py3.py debian/python3-sip/usr/lib/python3.$*/dist-packages/sipconfig.py
+ 	install -m 644 -o root -g root build-3.$*/sipconfig.py debian/python3-sip/usr/lib/python3.$*/dist-packages/sipconfig_nd$*.py
+ 	mv debian/python3-sip-dbg/usr/lib/python3.$*/dist-packages/sipconfig.py debian/python3-sip-dbg/usr/lib/python3/dist-packages/sipconfig_d$*.py
+-	mkdir -p debian/python3-sip-dev/usr/include/python3.$*m
+-	install -m 644 -o root -g root siplib/sip.h debian/python3-sip-dev/usr/include/python3.$*m/
+-	mkdir -p debian/python3-sip-dev/usr/include/python3.$*dm
+-	ln -s ../python3.$*m/sip.h \
+-	    debian/python3-sip-dev/usr/include/python3.$*dm/sip.h
++	mkdir -p debian/python3-sip-dev/usr/include/python3.$*$(if $(filter 2, $*),mu,m)
++
++	install -m 644 -o root -g root siplib/sip.h debian/python3-sip-dev/usr/include/python3.$*$(if $(filter 2, $*),mu,m)/
++
++	mkdir -p debian/python3-sip-dev/usr/include/python3.$*$(if $(filter 2, $*),dmu,dm)
++	ln -s ../python3.$*$(if $(filter 2, $*),mu,m)/sip.h \
++	    debian/python3-sip-dev/usr/include/python3.$*$(if $(filter 2, $*),dmu,dm)/sip.h
+ 	mkdir -p debian/python3-sip-dev/usr/lib/python3.$*/dist-packages
+ 	install -m 644 -o root -g root sipdistutils.py debian/python3-sip-dev/usr/lib/python3.$*/dist-packages
+ 
