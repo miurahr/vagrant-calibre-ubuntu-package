@@ -1,6 +1,6 @@
-diff -ur debian.o/control debian/control
+diff -ur a/debian/control b/debian/control
 --- a/debian/control	2014-03-21 15:53:50.000000000 +0900
-+++ b/debian/control	2014-09-05 11:58:52.983988477 +0900
++++ b/debian/control	2014-09-05 13:21:31.223941192 +0900
 @@ -15,18 +15,15 @@
                 libicu-dev,
                 libpulse-dev,
@@ -21,9 +21,9 @@ diff -ur debian.o/control debian/control
                 python3-dbus,
                 python3-dbus-dbg,
                 python3-sip-dbg,
-diff -ur debian.o/rules debian/rules
+diff -ur a/debian/rules b/debian/rules
 --- a/debian/rules	2014-03-21 15:53:50.000000000 +0900
-+++ b/debian/rules	2014-09-05 11:59:17.487988243 +0900
++++ b/debian/rules	2014-09-05 13:21:57.843940938 +0900
 @@ -52,7 +52,7 @@
  	dh_testdir
  	mkdir -p build-$*
@@ -33,3 +33,12 @@ diff -ur debian.o/rules debian/rules
  			-d /usr/lib/python$*/dist-packages \
  			--dbus /usr/include/dbus-1.0 \
  			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin)
+@@ -62,7 +62,7 @@
+ 	dh_testdir
+ 	mkdir -p dbg-build-$*
+ 	cd dbg-build-$* && python$*-dbg ../configure.py $(SHARED_CONFIGURE_OPTIONS) \
+-			-m $(shell python$*-dbg-config --configdir) \
++			-m $(if $(filter 3.2, $*),/usr/lib/python$*/config,$(shell python$*-config --configdir)) \
+ 			-l /usr/include/python$*$(if $(filter 3.2, $*),dmu,dm) \
+ 			-d /usr/lib/python$*/dist-packages \
+ 			--debug --no-designer-plugin --no-qml-plugin
