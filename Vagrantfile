@@ -24,12 +24,15 @@ APTPREPARE
 
 $dependency = <<DEPENDENCY
 apt-add-repository -y ppa:miurahr/qt5
+apt-add-repository -y ppa:miurahr/calibre
+apt-add-repository -y ppa:miurahr/calibre2
 apt-fast update
 apt-fast install -y dpkg-dev cdbs debhelper dh-buildinfo devscripts quilt autotools-dev doxygen
 apt-fast install -y fdupes libdbus-1-dev libglib2.0-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libpulse-dev libsqlite3-dev libudev-dev libxml2-dev libxslt1-dev python3-all-dbg python3-all-dev python3-dbus python3-dbus-dbg python-all-dbg python-all-dev python-dbus python-dbus-dbg python3-sphinx python-dbus-dev 
-apt-fast install -y python2.7-dev python-setuptools txt2man python-sphinx python-pil python-lxml python-mechanize python-beautifulsoup python-dateutil python-pkg-resources python-cssutils python-cssselect python-cherrypy3 python-markdown python-pyparsing python-routes python-chardet python-netifaces libmagickwand-dev libsqlite3-dev python-sip-dev libmtp-dev poppler-utils libpodofo-dev libboost-dev libudev-dev libmtdev-dev libchm-dev
+apt-fast install -y python2.7-dev python-setuptools txt2man python-sphinx python-imaging python-lxml python-mechanize python-beautifulsoup python-dateutil python-pkg-resources python-cssutils python-cssselect python-cherrypy3 python-markdown python-pyparsing python-routes python-chardet python-netifaces libmagickwand-dev libsqlite3-dev python-sip-dev libmtp-dev poppler-utils libpodofo-dev libboost-dev libudev-dev libmtdev-dev libchm-dev
 apt-fast install -y libqt5opengl5-dev libqt5webkit5-dev qtmultimedia5-dev qtdeclarative5-dev qttools5-dev libqt5svg5-dev libqt5xmlpatterns5-dev
 apt-fast install -y qtchooser libicu-dev
+apt-fast install -y  python-cssselect python-cherrypy3 python-markdown python-pyparsing python-routes python-netifaces libmagickwand-dev qtbase5-private-dev libmtp-dev poppler-utils libpodofo-dev libboost-dev libmtdev-dev libchm-dev txt2man qt5-default python-imaging python-lxml python-mechanize  python-beautifulsoup python-dateutil python-cssutils
 DEPENDENCY
 
 $buildsip = <<BUILDSIP
@@ -74,35 +77,35 @@ sudo dpkg -i pyqt5-dev_*.deb python3-pyqt5*deb pyqt5-dev-tools*deb
 BUILDPYQT
 
 $installpyqt = <<INSTALLPYQT
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/pyqt5-dev-tools_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/pyqt5-dev_5.2.1+dfsg-1ubuntu1_all.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/pyqt5-doc_5.2.1+dfsg-1ubuntu1_all.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/pyqt5-examples_5.2.1+dfsg-1ubuntu1_all.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-dbus.mainloop.pyqt5-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-dbus.mainloop.pyqt5_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtmultimedia-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtmultimedia_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtopengl-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtopengl_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtquick-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtquick_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtsql-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtsql_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtsvg-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtsvg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtwebkit-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtwebkit_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtxmlpatterns-dbg_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtxmlpatterns_5.2.1+dfsg-1ubuntu1_amd64.deb
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5_5.2.1+dfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/pyqt5-dev-tools_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/pyqt5-dev_5.2.1%2Bdfsg-1ubuntu1_all.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/pyqt5-doc_5.2.1%2Bdfsg-1ubuntu1_all.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/pyqt5-examples_5.2.1%2Bdfsg-1ubuntu1_all.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-dbus.mainloop.pyqt5-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-dbus.mainloop.pyqt5_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtmultimedia-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtmultimedia_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtopengl-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtopengl_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtquick-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtquick_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtsql-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtsql_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtsvg-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtsvg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtwebkit-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtwebkit_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtxmlpatterns-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtxmlpatterns_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
 sudo dpkg -i pyqt5-dev_*.deb python3-pyqt5*deb pyqt5-dev-tools*deb
 INSTALLPYQT
 
 $buildcalibre = <<BUILD
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0+dfsg.orig.tar.xz
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0+dfsg-1.debian.tar.xz
-wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0+dfsg-1.dsc
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0%2Bdfsg.orig.tar.xz
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0%2Bdfsg-1.debian.tar.xz
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0%2Bdfsg-1.dsc
 dpkg-source -x calibre_2.0.0+dfsg-1.dsc
 debuild -us -uc -b -i
 cd ..
