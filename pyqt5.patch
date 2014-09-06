@@ -1082,7 +1082,7 @@ diff -urN a/debian/rules b/debian/rules
  			-d /usr/lib/python$*/dist-packages \
 -			--debug --no-designer-plugin --no-qml-plugin
 +			--sip-incdir /usr/include/python$*$(if $(filter 3.%, $*),$(if $(filter 3.2, $*),dmu,dm),_d) \
-+			--debug --no-designer-plugin --no-qml-plugin --no-tools
++			--debug --no-designer-plugin --no-qml-plugin
 +	sed -i 's/-isystem/-I/' dbg-build-$*/*/Makefile
  	touch $@
  
