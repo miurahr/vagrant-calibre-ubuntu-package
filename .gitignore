@@ -1,2 +1,3 @@
 credential.rb
 .vagrant
+vagrant.ssh.config

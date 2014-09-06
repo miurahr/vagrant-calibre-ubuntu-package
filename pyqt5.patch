@@ -1,6 +1,6 @@
 diff -ur a/debian/control b/debian/control
 --- a/debian/control	2014-03-21 15:53:50.000000000 +0900
-+++ b/debian/control	2014-09-05 13:21:31.223941192 +0900
++++ b/debian/control	2014-09-06 07:56:37.696016645 +0900
 @@ -15,18 +15,15 @@
                 libicu-dev,
                 libpulse-dev,
@@ -21,15 +21,122 @@ diff -ur a/debian/control b/debian/control
                 python3-dbus,
                 python3-dbus-dbg,
                 python3-sip-dbg,
+@@ -279,106 +276,6 @@
+  .
+  This package contains the extensions built for the Python 3 debug interpreter.
+ 
+-Package: python3-pyqt5.qtserialport
+-Architecture: any
+-Depends: python3-pyqt5 (= ${binary:Version}),
+-         ${misc:Depends},
+-         ${python3:Depends},
+-         ${shlibs:Depends}
+-Description: Python 3 bindings for QtSerialPort module
+- The QtSerialPort module of PyQt5 provides a set of APIs to use serial ports
+- from PyQt applications.
+-
+-Package: python3-pyqt5.qtserialport-dbg
+-Priority: extra
+-Section: debug
+-Architecture: any
+-Depends: python3-dbg,
+-         python3-pyqt5-dbg (= ${binary:Version}),
+-         python3-pyqt5.qtserialport (= ${binary:Version}),
+-         ${misc:Depends},
+-         ${shlibs:Depends}
+-Description: Python 3 bindings for QtSerialPort module (debug extension)
+- The QtSerialPort module of PyQt5 provides a set of APIs to use serial ports
+- from PyQt applications.
+- .
+- This package contains the extension built for the Python 3 debug interpreter.
+-
+-Package: python3-pyqt5.qtsensors
+-Architecture: any
+-Depends: python3-pyqt5 (= ${binary:Version}),
+-         ${misc:Depends},
+-         ${python3:Depends},
+-         ${shlibs:Depends}
+-Description: Python 3 bindings for QtSensors module
+- The QtSensors module of PyQt5 provides a set of APIs to access sensors
+- hardware from PyQt applications.
+-
+-Package: python3-pyqt5.qtsensors-dbg
+-Priority: extra
+-Section: debug
+-Architecture: any
+-Depends: python3-dbg,
+-         python3-pyqt5-dbg (= ${binary:Version}),
+-         python3-pyqt5.qtsensors (= ${binary:Version}),
+-         ${misc:Depends},
+-         ${shlibs:Depends}
+-Description: Python 3 bindings for QtSensors module (debug extension)
+- The QtSensors module of PyQt5 provides a set of APIs to access sensors
+- hardware from PyQt applications.
+- .
+- This package contains the extension built for the Python 3 debug interpreter.
+-
+-Package: python3-pyqt5.qtx11extras
+-Architecture: any
+-Depends: python3-pyqt5 (= ${binary:Version}),
+-         ${misc:Depends},
+-         ${python3:Depends},
+-         ${shlibs:Depends}
+-Description: Python 3 bindings for QtX11Extras module
+- The QtX11Extras module of PyQt5 provides an API to access X11-specific
+- information and classes.
+-
+-Package: python3-pyqt5.qtx11extras-dbg
+-Priority: extra
+-Section: debug
+-Architecture: any
+-Depends: python3-dbg,
+-         python3-pyqt5-dbg (= ${binary:Version}),
+-         python3-pyqt5.qtx11extras (= ${binary:Version}),
+-         ${misc:Depends},
+-         ${shlibs:Depends}
+-Description: Python 3 bindings for QtX11Extras module (debug extension)
+- The QtX11Extras module of PyQt5 provides an API to access X11-specific
+- information and classes.
+- .
+- This package contains the extension built for the Python 3 debug interpreter.
+-
+-Package: python3-pyqt5.qtpositioning
+-Architecture: any
+-Depends: python3-pyqt5 (= ${binary:Version}),
+-         ${misc:Depends},
+-         ${python3:Depends},
+-         ${shlibs:Depends}
+-Description: Python 3 bindings for QtPositioning module
+- The QtPositioning module of PyQt5 provides an API to access location and
+- positioning information.
+-
+-Package: python3-pyqt5.qtpositioning-dbg
+-Priority: extra
+-Section: debug
+-Architecture: any
+-Depends: python3-dbg,
+-         python3-pyqt5-dbg (= ${binary:Version}),
+-         python3-pyqt5.qtpositioning (= ${binary:Version}),
+-         ${misc:Depends},
+-         ${shlibs:Depends}
+-Description: Python 3 bindings for QtPositioning module (debug extension)
+- The QtPositioning module of PyQt5 provides an API to access location and
+- positioning information.
+- .
+- This package contains the extension built for the Python 3 debug interpreter.
+-
+ Package: pyqt5-dev
+ Architecture: all
+ Depends: python3-sip-dev, ${misc:Depends}, ${python3:Depends}
 diff -ur a/debian/rules b/debian/rules
 --- a/debian/rules	2014-03-21 15:53:50.000000000 +0900
-+++ b/debian/rules	2014-09-05 13:21:57.843940938 +0900
++++ b/debian/rules	2014-09-06 07:57:45.748015996 +0900
 @@ -52,7 +52,7 @@
  	dh_testdir
  	mkdir -p build-$*
  	cd build-$* && python$* ../configure.py $(SHARED_CONFIGURE_OPTIONS) \
 -			-m $(shell python$*-config --configdir) \
-+			-m $(if $(filter 3.2, $*),/usr/lib/python$*/config,$(shell python$*-config --configdir)) \
++			-m $(if $(filter 3.2, $*), /usr/lib/python$*/config, $(shell python$*-dbg-config --configdir)) \
  			-d /usr/lib/python$*/dist-packages \
  			--dbus /usr/include/dbus-1.0 \
  			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin)
@@ -38,7 +145,43 @@ diff -ur a/debian/rules b/debian/rules
  	mkdir -p dbg-build-$*
  	cd dbg-build-$* && python$*-dbg ../configure.py $(SHARED_CONFIGURE_OPTIONS) \
 -			-m $(shell python$*-dbg-config --configdir) \
-+			-m $(if $(filter 3.2, $*),/usr/lib/python$*/config,$(shell python$*-config --configdir)) \
++			-m $(if $(filter 3.2, $*), /usr/lib/python$*/config, $(shell python$*-dbg-config --configdir)) \
  			-l /usr/include/python$*$(if $(filter 3.2, $*),dmu,dm) \
  			-d /usr/lib/python$*/dist-packages \
  			--debug --no-designer-plugin --no-qml-plugin
+@@ -145,7 +145,7 @@
+ 
+ 	# Don't initiate the uic/widget-plugins
+ 	touch $(CURDIR)/debian/tmp/usr/lib/python3.$*/dist-packages/PyQt5/uic/widget-plugins/.noinit
+-	for module in opengl sql webkit xmlpatterns svg multimedia quick serialport sensors x11extras positioning; do \
++	for module in opengl sql webkit xmlpatterns svg multimedia quick; do \
+ 		mkdir -p debian/python3-pyqt5.qt$$module-dbg/usr/lib/python3.$*/dist-packages/PyQt5; \
+ 	done
+ 	mv $(d3_qt5_dbg)/usr/lib/python3.$*/dist-packages/PyQt5/*OpenGL*.so \
+@@ -163,14 +163,6 @@
+ 	mv $(d3_qt5_dbg)/usr/lib/python3.$*/dist-packages/PyQt5/QtQml.so \
+ 	   $(d3_qt5_dbg)/usr/lib/python3.$*/dist-packages/PyQt5/QtQuick.so \
+ 		debian/python3-pyqt5.qtquick-dbg/usr/lib/python3.$*/dist-packages/PyQt5
+-	mv $(d3_qt5_dbg)/usr/lib/python3.$*/dist-packages/PyQt5/QtSerialPort.so \
+-		debian/python3-pyqt5.qtserialport-dbg/usr/lib/python3.$*/dist-packages/PyQt5
+-	mv $(d3_qt5_dbg)/usr/lib/python3.$*/dist-packages/PyQt5/QtSensors.so \
+-		debian/python3-pyqt5.qtsensors-dbg/usr/lib/python3.$*/dist-packages/PyQt5
+-	mv $(d3_qt5_dbg)/usr/lib/python3.$*/dist-packages/PyQt5/QtX11Extras.so \
+-		debian/python3-pyqt5.qtx11extras-dbg/usr/lib/python3.$*/dist-packages/PyQt5
+-	mv $(d3_qt5_dbg)/usr/lib/python3.$*/dist-packages/PyQt5/QtPositioning.so \
+-		debian/python3-pyqt5.qtpositioning-dbg/usr/lib/python3.$*/dist-packages/PyQt5
+ 
+ clean:
+ 	dh_testdir
+@@ -202,9 +194,8 @@
+ 	for p in python3-pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtsql \
+ 	  python3-pyqt5.qtwebkit python3-pyqt5.qtmultimedia \
+ 	  python3-pyqt5.qtsvg python3-pyqt5.qtxmlpatterns \
+-	  python3-pyqt5.qtquick python3-pyqt5.qtserialport \
+-	  python3-pyqt5.qtsensors python3-pyqt5.qtx11extras \
+-	  python3-pyqt5.qtpositioning python3-dbus.mainloop.pyqt5; do \
++	  python3-pyqt5.qtquick \
++	  python3-dbus.mainloop.pyqt5; do \
+ 		DH_OPTIONS= dh_strip -p$$p --dbg-package=$$p-dbg; \
+ 		rm -rf debian/$$p-dbg/usr/share/doc/$$p-dbg; \
+ 		mkdir -p debian/$$p-dbg/usr/share/doc; \
