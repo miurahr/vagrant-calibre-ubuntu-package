@@ -1066,7 +1066,7 @@ diff -urN a/debian/rules b/debian/rules
 -			-m $(shell python$*-config --configdir) \
 +			-m $(if $(filter 3.2, $*), /usr/lib/python$*/config, $(shell python$*-dbg-config --configdir)) \
  			-d /usr/lib/python$*/dist-packages \
-+			--sip-incdir /usr/include/python$*$(if $(filter 3.%, $*),m,) \
++			--sip-incdir /usr/include/python$*$(if $(filter 3.%, $*),$(if $(filter 3.2, $*),mu,m),) \
  			--dbus /usr/include/dbus-1.0 \
 -			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin)
 +			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin --no-tools)
@@ -1082,7 +1082,7 @@ diff -urN a/debian/rules b/debian/rules
 +			-l /usr/include/python$*$(if $(filter 3.%, $*),$(if $(filter 3.2, $*),dmu,dm),_d) \
  			-d /usr/lib/python$*/dist-packages \
 -			--debug --no-designer-plugin --no-qml-plugin
-+			--sip-incdir /usr/include/python$*$(if $(filter 3.%, $*),dm,_d) \
++			--sip-incdir /usr/include/python$*$(if $(filter 3.%, $*),$(if $(filter 3.2, $*),dmu,dm),_d) \
 +			--debug --no-designer-plugin --no-qml-plugin --no-tools
 +	sed -i 's/-isystem/-I/' dbg-build-$*/*/Makefile
  	touch $@
