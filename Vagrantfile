@@ -73,7 +73,7 @@ cd pyqt5-5.2.1+dfsg
 patch -i /vagrant/pyqt5.patch -p1
 debuild -us -uc -b -i | tee ../pyqt5_build.log
 cd ..
-sudo dpkg -i pyqt5-dev_*.deb python3-pyqt5*deb pyqt5-dev-tools*deb
+sudo dpkg -i pyqt5-dev_*.deb python-pyqt5*deb pyqt5-dev-tools*deb
 BUILDPYQT
 
 $installpyqt = <<INSTALLPYQT
@@ -99,7 +99,7 @@ wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtwebkit_5.2.1
 wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtxmlpatterns-dbg_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
 wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5.qtxmlpatterns_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
 wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5_5.2.1%2Bdfsg-1ubuntu1_amd64.deb
-sudo dpkg -i pyqt5-dev_*.deb python3-pyqt5*deb pyqt5-dev-tools*deb
+sudo dpkg -i pyqt5-dev_*.deb python-pyqt5*deb pyqt5-dev-tools*deb
 INSTALLPYQT
 
 $buildcalibre = <<BUILD
@@ -144,8 +144,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.provision "shell", inline: $buildsip, privileged: false
   config.vm.provision "shell", inline: $installsip, privileged: false
 
-  #config.vm.provision "shell", inline: $buildpyqt, privileged: false
-  config.vm.provision "shell", inline: $installpyqt, privileged: false
+  config.vm.provision "shell", inline: $buildpyqt, privileged: false
+  #config.vm.provision "shell", inline: $installpyqt, privileged: false
 
   config.vm.provision "shell", inline: $buildcalibre, privileged: false
 
