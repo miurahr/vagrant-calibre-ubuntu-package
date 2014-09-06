@@ -107,6 +107,7 @@ wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0%2Bdfsg.orig.ta
 wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0%2Bdfsg-1.debian.tar.xz
 wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0%2Bdfsg-1.dsc
 dpkg-source -x calibre_2.0.0+dfsg-1.dsc
+patch -i /vagrant/calibre.patch -p1
 debuild -us -uc -b -i
 cd ..
 BUILD
