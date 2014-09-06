@@ -99,6 +99,15 @@ wget -c https://s3-us-west-2.amazonaws.com/calibre2/python3-pyqt5_5.2.1+dfsg-1ub
 sudo dpkg -i pyqt5-dev_*.deb python3-pyqt5*deb pyqt5-dev-tools*deb
 INSTALLPYQT
 
+$buildcalibre = <<BUILD
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0+dfsg.orig.tar.xz
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0+dfsg-1.debian.tar.xz
+wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0+dfsg-1.dsc
+dpkg-source -x calibre_2.0.0+dfsg-1.dsc
+debuild -us -uc -b -i
+cd ..
+BUILD
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "dummy"
 
@@ -122,12 +131,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     override.ssh.username = "ubuntu"
   end
 
+  # make working directory on SSD
   config.vm.provision "shell", inline: "mkdir /mnt/calibre;chown ubuntu.ubuntu /mnt/calibre"
+
   config.vm.provision "shell", inline: $aptprepare, privileged: true
   config.vm.provision "shell", inline: $dependency, privileged: true
+
   #config.vm.provision "shell", inline: $buildsip, privileged: false
   config.vm.provision "shell", inline: $installsip, privileged: false
+
   #config.vm.provision "shell", inline: $buildpyqt, privileged: false
   config.vm.provision "shell", inline: $installpyqt, privileged: false
+
+  config.vm.provision "shell", inline: $buildcalibre, privileged: false
 
 end
