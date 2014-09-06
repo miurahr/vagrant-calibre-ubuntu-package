@@ -1064,12 +1064,11 @@ diff -urN a/debian/rules b/debian/rules
  	mkdir -p build-$*
  	cd build-$* && python$* ../configure.py $(SHARED_CONFIGURE_OPTIONS) \
 -			-m $(shell python$*-config --configdir) \
-+			-m $(if $(filter 3.2, $*), /usr/lib/python$*/config, $(shell python$*-dbg-config --configdir)) \
++			-m $(if $(filter 3.3, $*), $(shell python$*-dbg-config --configdir),/usr/lib/python$*/config) \
  			-d /usr/lib/python$*/dist-packages \
 +			--sip-incdir /usr/include/python$*$(if $(filter 3.%, $*),$(if $(filter 3.2, $*),mu,m),) \
  			--dbus /usr/include/dbus-1.0 \
--			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin)
-+			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin --no-tools)
+ 			$(if $(filter $(DEFAULT_PYTHON),$*),,--no-designer-plugin --no-qml-plugin)
  	touch $@
  
  dbg-build-%/configure-stamp:
@@ -1078,7 +1077,7 @@ diff -urN a/debian/rules b/debian/rules
  	cd dbg-build-$* && python$*-dbg ../configure.py $(SHARED_CONFIGURE_OPTIONS) \
 -			-m $(shell python$*-dbg-config --configdir) \
 -			-l /usr/include/python$*$(if $(filter 3.2, $*),dmu,dm) \
-+			-m $(if $(filter 3.2, $*), /usr/lib/python$*/config, $(shell python$*-dbg-config --configdir)) \
++			-m $(if $(filter 3.3, $*), $(shell python$*-dbg-config --configdir), /usr/lib/python$*/config) \
 +			-l /usr/include/python$*$(if $(filter 3.%, $*),$(if $(filter 3.2, $*),dmu,dm),_d) \
  			-d /usr/lib/python$*/dist-packages \
 -			--debug --no-designer-plugin --no-qml-plugin
