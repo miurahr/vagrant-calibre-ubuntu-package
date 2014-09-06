@@ -44,7 +44,7 @@ dpkg-source -x sip4_4.15.5-1build1.dsc
 cd sip4-4.15.5
 patch -i /vagrant/sip4.patch -p1
 patch -i /vagrant/sip4-2.patch -p1
-debuild -us -uc -b -i |tee ../sip4_build.log
+debuild -us -uc -b -i -j2 |tee ../sip4_build.log
 cd ..
 sudo dpkg -i python-sip*deb python3-sip*deb sip-dev*deb
 BUILDSIP
@@ -71,7 +71,7 @@ wget -c http://archive.ubuntu.com/ubuntu/pool/main/p/pyqt5/pyqt5_5.2.1+dfsg-1ubu
 dpkg-source -x pyqt5_5.2.1+dfsg-1ubuntu1.dsc
 cd pyqt5-5.2.1+dfsg
 patch -i /vagrant/pyqt5.patch -p1
-debuild -us -uc -b -i | tee ../pyqt5_build.log
+debuild -us -uc -b -i -j2 | tee ../pyqt5_build.log
 cd ..
 sudo dpkg -i pyqt5-dev_*.deb python-pyqt5*deb pyqt5-dev-tools*deb
 BUILDPYQT
@@ -108,7 +108,7 @@ wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0%2Bdfsg-1.debia
 wget -c https://s3-us-west-2.amazonaws.com/calibre2/calibre_2.0.0%2Bdfsg-1.dsc
 dpkg-source -x calibre_2.0.0+dfsg-1.dsc
 patch -i /vagrant/calibre.patch -p1
-debuild -us -uc -b -i
+debuild -us -uc -b -i -j2 |tee ../calibre2_build.log
 cd ..
 BUILD
 
